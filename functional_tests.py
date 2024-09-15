@@ -1,12 +1,23 @@
+import unittest
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
 
-browser = webdriver.Chrome()
-browser.get("http://localhost:8000")
 
-element: WebElement = browser.find_element(by=By.TAG_NAME, value="h1")
+class ExampleFunctionalTest(unittest.TestCase):
+    def setUp(self):
+        self.browser = webdriver.Chrome()
 
-assert element.text == "Mental Health Tracker"
+    def tearDown(self):
+        self.browser.quit()
 
-print("OK")
+    def test_heading_text_is_mental_health_tracker(self):
+        self.browser.get("http://localhost:8000")
+        element: WebElement = self.browser.find_element(by=By.TAG_NAME, value="h1")
+
+        self.assertEqual("Mental Health Tracker", element.text)
+
+    def test_page_title_is_mental_health_tracker(self):
+        self.browser.get("http://localhost:8000")
+
+        self.assertEqual("Mental Health Tracker", self.browser.title)
