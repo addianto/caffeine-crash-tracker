@@ -40,3 +40,8 @@ def login_user(request: HttpRequest) -> HttpResponse:
             )
     context = {}
     return render(request, "login.html", context)
+
+
+def logout_user(request: HttpRequest) -> HttpResponse:
+    logout(request)
+    return redirect("main:login")
